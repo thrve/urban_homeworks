@@ -11,4 +11,4 @@ def get_matrix(n, m, value):
     return matrix
 
 
-print(get_matrix(2, 3, 4))
+print(get_matrix(4, 2, 13))
