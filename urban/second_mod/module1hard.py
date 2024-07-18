@@ -12,6 +12,9 @@ for i in grades:
         k += j
     gpa.append(k / len(i))
 
-for i in gpa:
-    for j in students_list:
-        result
+average_grades = {}
+
+for i in range(len(gpa)):
+    average_grades[students_list[i]] = gpa[i]
+
+print(average_grades)
