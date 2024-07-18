@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+
+
 my_string = input("input please:")
 print()
 print(len(my_string))
