@@ -17,7 +17,12 @@ def draw_area():
 
 
 def win_checker():
-    pass
+
+    for row in arya:
+
+        print(row.count(row[0]))
+        # if row[0] == row[1] == row[2]:
+        # return
 
 
 draw_area()
