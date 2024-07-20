@@ -16,6 +16,10 @@ def draw_area():
     print()
 
 
+def win_checker():
+    pass
+
+
 draw_area()
 
 
@@ -33,16 +37,19 @@ for _ in iter(int, 1):
     row_column = input("select number row and column [1, 2, 3]: ")
     print()
 
-    if not re.match(input_re, row_column):
+    if not re.findall(input_re, row_column):
         print("incorrect value. enter a number from 1 to 3")
         continue
 
     row_column_list = []
     for i in row_column:
-        row_column_list.append(int(i) - 1)
+        if i.strip():
+            row_column_list.append(int(i) - 1)
 
-    if arya[row_column_list[0]][row_column_list[1]] == "*":
-        arya[row_column_list[0]][row_column_list[1]] = turn_char
+    row = row_column_list[0]
+    column = row_column_list[1]
+    if arya[row][column] == "*":
+        arya[row][column] = turn_char
         turn += 1
     else:
         print("the cell  is busy. select another cell")
