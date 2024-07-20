@@ -1,6 +1,14 @@
 #!/usr/bin/env python
 
 
+import re
+
+input_re = re.compile(r"\b[1-3] ?[1-3]\b")
+arya = [["*", "*", "*"], ["*", "*", "*"], ["*", "*", "*"]]
+print("welcome to the tic-tac-toe")
+print("==========================\n")
+
+
 def draw_area():
 
     for i in arya:
@@ -8,8 +16,14 @@ def draw_area():
     print()
 
 
-def turns(turn):
+draw_area()
+
+
+turn = 1
+for _ in iter(int, 1):
+
     print(f"move: {turn}")
+
     if turn % 2 == 0:
         turn_char = "0"
         print("the 0 move")
@@ -18,21 +32,20 @@ def turns(turn):
         print("the X move")
     row_column = input("select number row and column [1, 2, 3]: ")
     print()
+
+    if not re.match(input_re, row_column):
+        print("incorrect value. enter a number from 1 to 3")
+        continue
+
     row_column_list = []
     for i in row_column:
         row_column_list.append(int(i) - 1)
-    arya[row_column_list[0]][row_column_list[1]] = turn_char
 
-
-arya = [["*", "*", "*"], ["*", "*", "*"], ["*", "*", "*"]]
-print("welcome to the tic-tac-toe")
-print("==========================\n")
-
-draw_area()
-
-for turn in range(1, 10):
-    turns(turn)
-    if arya[row_column_list[0]][row_column_list[1]] == '*':
-        
+    if arya[row_column_list[0]][row_column_list[1]] == "*":
+        arya[row_column_list[0]][row_column_list[1]] = turn_char
+        turn += 1
+    else:
+        print("the cell  is busy. select another cell")
+        continue
 
     draw_area()
