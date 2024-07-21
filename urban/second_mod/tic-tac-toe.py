@@ -2,11 +2,20 @@
 
 
 import re
+import signal
 
 input_re = re.compile(r"\b[1-3] ?[1-3]\b")
 arya = [["*", "*", "*"], ["*", "*", "*"], ["*", "*", "*"]]
 print("welcome to the tic-tac-toe")
 print("==========================\n")
+
+
+def signal_handler(signum, frame):
+    print("\n")
+    exit(0)
+
+
+signal.signal(signal.SIGINT, signal_handler)
 
 
 def draw_area():
@@ -19,10 +28,26 @@ def draw_area():
 def win_checker():
 
     for row in arya:
+        if all(cell == row[0] and cell != "*" for cell in row):
+            return row[0]
 
-        print(row.count(row[0]))
-        # if row[0] == row[1] == row[2]:
-        # return
+    for col in range(len(arya)):
+        if all(
+            arya[row][col] == arya[0][col] and arya[row][col] != "*"
+            for row in range(len(arya))
+        ):
+            return arya[0][col]
+
+    if all(arya[i][i] == arya[0][0] and arya[i][i] != "*" for i in range(len(arya))):
+        return arya[0][0]
+    if all(
+        arya[i][len(arya) - 1 - i] == arya[0][len(arya) - 1]
+        and arya[i][len(arya) - 1 - i] != "*"
+        for i in range(len(arya))
+    ):
+        return arya[0][len(arya) - 1]
+
+    return False
 
 
 draw_area()
@@ -61,3 +86,13 @@ for _ in iter(int, 1):
         continue
 
     draw_area()
+
+    win = win_checker()
+
+    if win:
+        if win == "X":
+            print("X won")
+            exit(0)
+        else:
+            print("0 won")
+            exit(0)
