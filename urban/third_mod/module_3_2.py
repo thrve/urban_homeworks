@@ -9,7 +9,7 @@ mail_pattern = re.compile(r"^\S+@\S+(\.com|\.ru|\.net)$")
 def send_email(message: str, recipient: str, sender="university.help@gmail.com"):
     if not re.match(mail_pattern, sender) or not re.match(mail_pattern, recipient):
         print(
-            f"it is impossible to send a letter from address {sender} to address {recipient}"
+            f"It is impossible to send a letter from address {sender} to address {recipient}"
         )
     elif sender == recipient:
         print("You can't send a letter to yourself!")
