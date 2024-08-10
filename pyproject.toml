@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "urban"
+version = "0.1.0"
+description = ""
+authors = ["thrve <hithrv@yandex.ru>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+ipython = "^8.26.0"
+pickleshare = "^0.7.5"
+colorama = "^0.4.6"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
