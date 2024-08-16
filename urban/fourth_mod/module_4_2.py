@@ -10,6 +10,6 @@ def test_function():
 
 test_function()
 
-inner_function()
+# inner_function()
 # Pyright: "inner_function" is not defined [reportUndefinedVariable]
 # NameError: name 'inner_function' is not defined. Did you mean: 'test_function'?
