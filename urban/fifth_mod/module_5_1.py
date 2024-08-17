@@ -11,5 +11,4 @@ class House:
             print("There is no such floor.")
             exit(0)
         else:
-            # print(f'{i for i in range(1, new_floor)}')
             print(", ".join(str(i) for i in range(1, new_floor)))
