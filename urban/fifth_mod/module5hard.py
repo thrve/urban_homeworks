@@ -39,7 +39,7 @@ if __name__ == "__main__":
         password = input("password: ")
         age = input("age: ")
 
-        user = User(nickname, password, age)  # Регистрация пользователя
+        user = User(nickname, password, age)
 
         print(f"User {user.nickname} is registered. Age: {user.age}")
 
