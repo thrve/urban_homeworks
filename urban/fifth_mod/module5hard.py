@@ -17,28 +17,24 @@ class User:
         return hashlib.sha3_256(password.encode()).hexdigest()
 
     def __is_valid_password(self, password):
-        pattern = r"^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[\W_]).{12,}$"
+        pattern = r'^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[\W_]).{12,}$'
         return re.match(pattern, password) is not None
 
     def __set_password(self, password):
         if self.__is_valid_password(password):
             return self.__hash_password(password)
         else:
-            print("The password does not meet the security criteria.")
+            print('The password does not meet the security criteria.')
             sys.exit(1)
 
     def __str__(self):
         return self.nickname
 
     def __repr__(self):
-        return f"User(nickname={self.nickname}, age={self.age})"
+        return f'User(nickname={self.nickname}, age={self.age})'
 
     def __eq__(self, other):
-        return (
-            isinstance(other, User)
-            and self.nickname == other.nickname
-            and self.password == other.password
-        )
+        return isinstance(other, User) and self.nickname == other.nickname and self.password == other.password
 
 
 class Video:
@@ -52,7 +48,7 @@ class Video:
         return self.title
 
     def __repr__(self):
-        return f"Video(title={self.title}, duration={self.duration}, time_now={self.time_now}, adult_mode={self.adult_mode})"
+        return f'Video(title={self.title}, duration={self.duration}, time_now={self.time_now}, adult_mode={self.adult_mode})'
 
     def __eq__(self, other):
         return isinstance(other, Video) and self.title == other.title
@@ -70,11 +66,11 @@ class UrTube:
             if user.nickname == nickname and user.password == hashed_password:
                 self.current_user = user
                 return
-        print("Invalid login or password")
+        print('Invalid login or password')
 
     def register(self, nickname, password, age):
         if any(user.nickname == nickname for user in self.users):
-            print(f"User {nickname} already exists")
+            print(f'User {nickname} already exists')
         else:
             new_user = User(nickname, password, age)
             self.users.append(new_user)
@@ -85,32 +81,28 @@ class UrTube:
 
     def add(self, *videos):
         for video in videos:
-            if not any(
-                existing_video.title == video.title for existing_video in self.videos
-            ):
+            if not any(existing_video.title == video.title for existing_video in self.videos):
                 self.videos.append(video)
 
     def get_videos(self, search_term):
         search_term = search_term.lower()
-        return [
-            video.title for video in self.videos if search_term in video.title.lower()
-        ]
+        return [video.title for video in self.videos if search_term in video.title.lower()]
 
     def watch_video(self, title):
         if self.current_user is None:
-            print("Login to watch video")
+            print('Login to watch video')
             return
 
         video = next((v for v in self.videos if v.title == title), None)
         if video is None:
-            print("Video not found")
+            print('Video not found')
             return
 
         if video.adult_mode and self.current_user.age < 18:
-            print("You are under 18 years old, please leave the page")
+            print('You are under 18 years old, please leave the page')
             return
 
         for second in range(video.duration):
-            print(second + 1, end=" ")
+            print(second + 1, end=' ')
             time.sleep(1)
-        print("End of video")
+        print('End of video')

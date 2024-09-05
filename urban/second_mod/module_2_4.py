@@ -17,5 +17,5 @@ for i in numbers:
     else:
         not_primes.append(i)
 
-print(f"Primes: {primes}")
-print(f"Not Primes: {not_primes}")
+print(f'Primes: {primes}')
+print(f'Not Primes: {not_primes}')

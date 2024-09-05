@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 
-example = "Топинамбур"
+example = 'Топинамбур'
 
 print(example[0])
 print(example[-1])

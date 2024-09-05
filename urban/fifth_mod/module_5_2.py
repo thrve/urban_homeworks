@@ -8,13 +8,13 @@ class House:
 
     def go_to(self, new_floor):
         if new_floor > self.number_of_floors or new_floor < 1:
-            print("There is no such floor.")
+            print('There is no such floor.')
             exit(0)
         else:
-            print(", ".join(str(i) for i in range(1, new_floor)))
+            print(', '.join(str(i) for i in range(1, new_floor)))
 
     def __len__(self):
         return self.number_of_floors
 
     def __str__(self):
-        return f"Name: {self.name}, number of floors: {self.number_of_floors}"
+        return f'Name: {self.name}, number of floors: {self.number_of_floors}'

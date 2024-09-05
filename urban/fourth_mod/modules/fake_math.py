@@ -3,6 +3,6 @@
 
 def divide(first, second):
     if second == 0:
-        return "error"
+        return 'error'
     else:
         return first / second

@@ -2,7 +2,6 @@
 
 
 class House:
-
     houses_history = []
 
     def __new__(cls, *args):
@@ -16,15 +15,15 @@ class House:
 
     def go_to(self, new_floor):
         if new_floor > self.number_of_floors or new_floor < 1:
-            raise ValueError("There is no such floor.")
+            raise ValueError('There is no such floor.')
         else:
-            print(", ".join(str(i) for i in range(1, new_floor)))
+            print(', '.join(str(i) for i in range(1, new_floor)))
 
     def __len__(self):
         return self.number_of_floors
 
     def __str__(self):
-        return f"Name: {self.name}, number of floors: {self.number_of_floors}"
+        return f'Name: {self.name}, number of floors: {self.number_of_floors}'
 
     def __eq__(self, other):
         if isinstance(other, int):
@@ -90,4 +89,4 @@ class House:
             return NotImplemented
 
     def __del__(self):
-        print(f"{self.name} demolished, but it will remain in history")
+        print(f'{self.name} demolished, but it will remain in history')

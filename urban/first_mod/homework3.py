@@ -1,4 +1,4 @@
-name = "Aleksey"
+name = 'Aleksey'
 print(name)
 age = 36
 print(age)

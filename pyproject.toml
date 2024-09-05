@@ -11,6 +11,16 @@ ipython = "^8.26.0"
 pickleshare = "^0.7.5"
 colorama = "^0.4.6"
 
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.flake8-quotes]
+docstring-quotes = "single"
+inline-quotes = "single"
+
+[tool.ruff.format]
+# Prefer single quotes over double quotes
+quote-style = "single"
 
 [build-system]
 requires = ["poetry-core"]
