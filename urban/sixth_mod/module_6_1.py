@@ -13,7 +13,7 @@ class Animal:
                 print(f'{self.name} ate the {food.name}')
                 self.fed = True
             else:
-                print(f'{self.name} didn't eat {food.name})
+                print(f"{self.name} didn't eat {food.name}")
                 self.alive = False
         else:
             print('this is not a plant')
