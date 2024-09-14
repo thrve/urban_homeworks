@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 
-# Данные
 team1_num = 5
 team2_num = 6
 score_1 = 40
