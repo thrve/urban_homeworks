@@ -11,6 +11,9 @@ ipython = "^8.26.0"
 pickleshare = "^0.7.5"
 colorama = "^0.4.6"
 xonsh = {extras = ["full"], version = "^0.18.3"}
+pygments = "^2.18.0"
+prompt-toolkit = "^3.0.47"
+setproctitle = "^1.3.3"
 
 [tool.ruff]
 line-length = 120

@@ -577,4 +577,4 @@ test = ["coverage (>=5.3.1)", "prompt-toolkit (>=3.0.29)", "pygments (>=2.2)", "
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "5f84bf98c253cab4941c02668447337cab382dfece5260fac9c5f5dddffb7960"
+content-hash = "d5d99722d5754f30aa92fd3b487353b5ebac71279a24baf75e8a45492866d5d7"
