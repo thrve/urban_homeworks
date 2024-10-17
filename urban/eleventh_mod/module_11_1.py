@@ -10,7 +10,6 @@ import pexpect
 
 username = os.getenv('LOGIN')
 password = os.getenv('PASSWORD')
-
 con_ref = 'telnet: Unable to connect to remote host: Connection refused'
 
 
@@ -82,3 +81,6 @@ if __name__ == '__main__':
                     print('')
                     telnet.sendcontrol('j')
                     telnet.interact()
+
+
+
