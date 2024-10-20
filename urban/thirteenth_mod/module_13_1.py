@@ -8,7 +8,6 @@ async def start_strongman(name, power):
     print(f'Силач {name} начал соревнования.')
     for boll in range(1, 6):
         await asyncio.sleep(1 / power)
-        # print(f'Силач {name} поднял {boll} шар{'ов' if boll == 5 else 'а'}')
         print(f'Силач {name} поднял {boll} шар{"ов" if boll == 5 else "а" if boll > 1 else ""}')
     print(f'Силач {name} закончил соревнования')
 
