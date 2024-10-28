@@ -20,7 +20,6 @@ dp = Dispatcher()
 
 
 class UserState(StatesGroup):
-    calories = State()
     age = State()
     growth = State()
     weight = State()
