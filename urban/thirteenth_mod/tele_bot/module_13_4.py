@@ -4,7 +4,7 @@
 import asyncio
 import logging
 import os
-from aiogram import Bot, Dispatcher, types
+from aiogram import Bot, Dispatcher, F, types
 from aiogram.fsm.storage.memory import MemoryStorage
 from aiogram.filters.command import CommandStart
 from aiogram.fsm.state import State, StatesGroup
@@ -27,16 +27,14 @@ class UserState(StatesGroup):
 
 
 @dp.message(CommandStart())
-async def start(message: types.Message, state: FSMContext) -> None:
-    await state.set_state(UserState.calories)
+async def start(message: types.Message) -> None:
     await message.answer("Привет! Напишите 'Calories', чтобы начать.")
 
 
-@dp.message(UserState.calories)
+@dp.message(F.text.lower() == 'calories')
 async def set_age(message: types.Message, state: FSMContext) -> None:
-    if message.text.lower() == 'calories':
-        await state.set_state(UserState.age)
-        await message.answer('Введите свой возраст:')
+    await state.set_state(UserState.age)
+    await message.answer('Введите свой возраст:')
 
 
 @dp.message(UserState.age)
