@@ -17,7 +17,7 @@ storage = MemoryStorage()
 dp = Dispatcher()
 
 
-@dp.message()
+@dp.message(Command('start'))
 async def start(message: types.Message):
     await message.answer('Привет! Я бот, помогающий твоему здоровью.')
 
