@@ -33,7 +33,7 @@ class ButtonText:
     info = 'Информаия'
 
 
-def get_on_start_kb():
+def get_on_start_kb() -> ReplyKeyboardMarkup:
     button_calculate = KeyboardButton(text=ButtonText.calculate)
     button_info = KeyboardButton(text=ButtonText.info)
     button_row = [button_calculate, button_info]
