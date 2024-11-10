@@ -17,6 +17,8 @@ from aiogram.types import FSInputFile
 from keyboards.keyboards import get_on_start_kb, get_inline_keyboard, get_bying_menu
 from keyboards.keyboards import ButtonText
 
+from crud_functions import get_all_products
+
 
 API_TOKEN = os.environ['URBAN_BOT_TOKEN']
 logging.basicConfig(level=logging.INFO)
@@ -43,12 +45,13 @@ async def start(message: Message) -> None:
 
 @dp.message(F.text == ButtonText.buy)
 async def get_buying_list(message: Message) -> None:
-    prod_path = '/home/thrv/.playground/urban/urban/urban/fourteenth_mod/telegram_bot/images/prod_'
-    for i in range(1, 5):
-        product_name = getattr(ButtonText, f'product{i}')
+    products = get_all_products()
+
+    for product in products:
+        id, title, description, price, image_path = product
         await message.answer_photo(
-            photo=FSInputFile(f'{prod_path}{i}.jpg'),
-            caption=f'Название: {product_name:} | Описание: {product_name:} | Цена: {i * 100}',
+            photo=FSInputFile(image_path),
+            caption=f'Название: {title} | Описание: {description} | Цена: {price}',
             parse_mode='HTML',
         )
     await message.answer('Выберите продукт для покупки:', reply_markup=get_bying_menu())
