@@ -9,6 +9,7 @@ from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import StatesGroup, State
 from keyboards.keyboards import ButtonText
 from validators.email_validator import valid_email_filter
+from validators.age_validator import valid_age_filter
 from crud_functions import add_user, is_included
 
 
@@ -57,20 +58,16 @@ async def invalid_email(message: Message) -> None:
     await message.answer(text='Недопустимый email.\nПовторите ввод:')
 
 
-@router.message(RegistrationState.age, F.text.regexp(r'^\d{1,3}$').as_('some_age'))
-async def set_age(message: Message, state: FSMContext, some_age: Match[str]) -> None:
-    valid_age = some_age.group()
-    if 18 <= int(valid_age) <= 100:
-        await state.update_data(age=valid_age)
-        data = await state.get_data()
-        username = data['username']
-        email = data['email']
-        age = int(data['age'])
-        add_user(username, email, age)
-        await message.answer(f'Спасибо, {username}, регистрация пройдена успешно.\n')
-        await state.clear()
-    else:
-        await invalid_age(message)
+@router.message(RegistrationState.age, valid_age_filter)  # F.text.regexp(r'^\d{1,3}$').as_('some_age'))
+async def set_age(message: Message, state: FSMContext, valid_age: str) -> None:
+    await state.update_data(age=valid_age)
+    data = await state.get_data()
+    username = data['username']
+    email = data['email']
+    age = int(data['age'])
+    add_user(username, email, age)
+    await message.answer(f'Спасибо, {username}, регистрация пройдена успешно.\n')
+    await state.clear()
 
 
 @router.message(RegistrationState.age)
