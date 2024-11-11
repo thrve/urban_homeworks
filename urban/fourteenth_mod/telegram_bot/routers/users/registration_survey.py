@@ -10,6 +10,7 @@ from aiogram.fsm.state import StatesGroup, State
 from keyboards.keyboards import ButtonText
 from validators.email_validator import valid_email_filter
 from validators.age_validator import valid_age_filter
+from validators.name_validator import valid_name_filter
 from crud_functions import add_user, is_included
 
 
@@ -29,14 +30,12 @@ async def sing_up(message: Message, state: FSMContext) -> None:
     await message.answer(text='Введите имя пользователя (только латинский алфавит):')
 
 
-@router.message(RegistrationState.username, F.text.regexp(r'^[a-zA-z]+$').as_('name'))
-async def set_username(message: Message, state: FSMContext, name: Match[str]) -> None:
-    username = name.group()
-
-    if is_included(username):
+@router.message(RegistrationState.username, valid_name_filter)
+async def set_username(message: Message, state: FSMContext, name: str) -> None:
+    if is_included(name):
         await message.answer(text='Пользователь существует, введите другое имя:')
     else:
-        await state.update_data(username=username)
+        await state.update_data(username=name)
         await state.set_state(RegistrationState.email)
         await message.answer(text='Введите свой email:')
 
@@ -58,7 +57,7 @@ async def invalid_email(message: Message) -> None:
     await message.answer(text='Недопустимый email.\nПовторите ввод:')
 
 
-@router.message(RegistrationState.age, valid_age_filter)  # F.text.regexp(r'^\d{1,3}$').as_('some_age'))
+@router.message(RegistrationState.age, valid_age_filter)
 async def set_age(message: Message, state: FSMContext, valid_age: str) -> None:
     await state.update_data(age=valid_age)
     data = await state.get_data()
