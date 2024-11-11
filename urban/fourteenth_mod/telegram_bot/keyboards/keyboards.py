@@ -6,9 +6,11 @@ from aiogram.utils.keyboard import ReplyKeyboardBuilder, InlineKeyboardBuilder
 
 
 class ButtonText:
-    calculate = 'Рассчитать'
-    info = 'Информаия'
     buy = 'Купить'
+    calculate = 'Рассчитать'
+    registration = 'Регистрация'
+    info = 'Информаия'
+
     product1 = 'стресс'
     product2 = 'бёрнаут'
     product3 = 'отчаяние'
@@ -19,8 +21,9 @@ def get_on_start_kb() -> ReplyKeyboardMarkup:
     builder = ReplyKeyboardBuilder()
     builder.button(text=ButtonText.buy)
     builder.button(text=ButtonText.calculate)
+    builder.button(text=ButtonText.registration)
     builder.button(text=ButtonText.info)
-    builder.adjust(1, 2)
+    builder.adjust(2)
     return builder.as_markup(resize_keyboard=True)
 
 

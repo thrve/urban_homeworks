@@ -16,6 +16,7 @@ xonsh = {extras = ["full"], version = "^0.18.3"}
 ipython = "^8.28.0"
 aiogram = "^3.13.1"
 litecli = "^1.12.3"
+email-validator = "^2.2.0"
 
 [tool.poetry.plugins.dotenv]
 ignore = "true"
