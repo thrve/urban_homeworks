@@ -21,7 +21,7 @@ users: List[User] = []
 
 
 @app.get('/users/', response_model=List[User])
-def get_users():
+def get_users() -> List[User]:
     return users
 
 
@@ -29,7 +29,7 @@ def get_users():
 def create_user(
     username: str = Path(min_length=5, max_length=20, description='Enter username'),
     age: int = Path(ge=18, le=120, description='Enter age'),
-):
+) -> User:
     new_id = len(users) + 1 if users else 1
     new_user = User(id=new_id, username=username, age=age)
     users.append(new_user)
@@ -41,7 +41,7 @@ def update_user(
     user_id: int = Path(description='Enter user ID'),
     username: str = Path(min_length=5, max_length=20, description='Enter username'),
     age: int = Path(ge=18, le=120, description='Enter age'),
-):
+) -> User:
     for user in users:
         if user.id == user_id:
             user.username = username
@@ -51,7 +51,7 @@ def update_user(
 
 
 @app.delete('/user/{user_id}/', response_model=User)
-def delete_user(user_id: int = Path(description='Enter user ID')):
+def delete_user(user_id: int = Path(description='Enter user ID')) -> User:
     for index, user in enumerate(users):
         if user.id == user_id:
             deleted_user = users.pop(index)
