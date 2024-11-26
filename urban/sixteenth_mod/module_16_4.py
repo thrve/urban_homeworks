@@ -1,10 +1,12 @@
+#!/usr/bin/env python
+
+
 from fastapi import FastAPI, Path, HTTPException
 from pydantic import BaseModel
 from typing import Annotated, List
 from annotated_types import MinLen, MaxLen
 import uvicorn
 import os
-
 
 ip_addr = os.environ['IP']
 app = FastAPI()
@@ -26,7 +28,8 @@ def get_users() -> List[User]:
 
 @app.post('/user/', response_model=User)
 def create_user(user: User) -> User:
-    new_id = len(users) + 1 if users else 1
+    max_id = max((existing_user.id for existing_user in users), default=0)
+    new_id = max_id + 1
     new_user = User(id=new_id, **user.model_dump())
     users.append(new_user)
     return new_user
