@@ -3,13 +3,14 @@
 
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import relationship
-from app.backend.db import Base
-from app.models.task import Task
+from backend.db import Base
+from models import *
 from sqlalchemy.schema import CreateTable
 
 
 class User(Base):
     __tablename__ = 'users'
+    __table_args__ = {'extend_existing': True}
 
     id = Column(Integer, primary_key=True, index=True)
     username = Column(String)

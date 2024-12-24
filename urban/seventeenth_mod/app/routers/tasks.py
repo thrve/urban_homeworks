@@ -21,7 +21,9 @@ async def create_task():
     pass
 
 
-@router.put('/update')
+router.put('/update')
+
+
 async def update_task():
     pass
 

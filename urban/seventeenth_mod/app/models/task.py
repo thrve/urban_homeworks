@@ -3,8 +3,8 @@
 
 from sqlalchemy import Column, Integer, String, Boolean, ForeignKey
 from sqlalchemy.orm import relationship
-from app.backend.db import Base
-from app.models.user import User
+from backend.db import Base
+from models import *
 from sqlalchemy.schema import CreateTable
 
 

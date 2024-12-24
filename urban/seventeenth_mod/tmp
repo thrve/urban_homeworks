@@ -1,0 +1,13 @@
+import sys
+import os
+
+sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '/../')
+
+
+from app.backend.db import Base
+from app.models.task import Task
+from app.models.user import User
+
+target_metadata = Base.metadata
+
+sqlalchemy.url = sqlite:///taskmanager.db
