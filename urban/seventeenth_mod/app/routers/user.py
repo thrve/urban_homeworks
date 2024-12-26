@@ -7,10 +7,11 @@ from backend.db_depends import get_db
 from typing import Annotated
 from models.user import User
 from schemas import CreateUser, UpdateUser
-from sqlalchemy import select
+from sqlalchemy import insert, select, update, delete
 from slugify import slugify
 import logging
 
+# Set up logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
@@ -32,7 +33,7 @@ async def by_id(user_id: int, db: Annotated[Session, Depends(get_db)]):
 
 
 
-@router.post('/create/', response_model=CreateUser, status_code=status.HTTP_201_CREATED)
+@router.post('/create/')
 async def create_user(user: CreateUser , db: Annotated[Session, Depends(get_db)]):
     try:
         user_slug = slugify(user.username)
@@ -48,39 +49,39 @@ async def create_user(user: CreateUser , db: Annotated[Session, Depends(get_db)]
         logger.error(f"Error creating user: {e}")
         raise HTTPException(status_code=500, detail="Internal Server Error")
 
-
-@router.put('/update/{user_id}') 
+@router.put('/update/{user_id}')
 async def update_user(user_id: int, user: UpdateUser , db: Annotated[Session, Depends(get_db)]):
     try:
-       
+
         existing_user = db.query(User).filter(User.id == user_id).first()
         if not existing_user:
             raise HTTPException(status_code=404, detail="User  not found")
 
-       
+
         for key, value in user.model_dump().items():
             setattr(existing_user, key, value)
 
         db.commit()
-        db.refresh(existing_user) 
+        db.refresh(existing_user)
         return existing_user
     except Exception as e:
         logger.error(f"Error updating user: {e}")
         raise HTTPException(status_code=500, detail="Internal Server Error")
 
 
-@router.delete('/delete/{user_id}', status_code=status.HTTP_204_NO_CONTENT)
+@router.delete('/delete/{user_id}')
 async def delete_user(user_id: int, db: Annotated[Session, Depends(get_db)]):
     try:
-       
+
         existing_user = db.query(User).filter(User.id == user_id).first()
         if not existing_user:
             raise HTTPException(status_code=404, detail="User  not found")
 
-        db.delete(existing_user) 
+        db.delete(existing_user)
         db.commit()
-        return 
+        return
     except Exception as e:
         logger.error(f"Error deleting user: {e}")
         raise HTTPException(status_code=500, detail="Internal Server Error")
+
 
