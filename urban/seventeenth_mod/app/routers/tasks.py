@@ -8,9 +8,7 @@ from typing import Annotated
 from models.task import Task
 from schemas import CreateTask, UpdateTask
 from sqlalchemy import select
-from sqlalchemy.orm import joinedload
 from models.user import User
-from slugify import slugify
 import logging
 
 logging.basicConfig(level=logging.INFO)
@@ -82,8 +80,3 @@ async def delete_task(task_id: int, db: Annotated[Session, Depends(get_db)]):
     except Exception as e:
         logger.error(f'Error deleting task: {e}')
         raise HTTPException(status_code=500, detail='Internal Server Error')
-
-
-# @router.delete('/delete/')
-# async def delete_task():
-#     pass
