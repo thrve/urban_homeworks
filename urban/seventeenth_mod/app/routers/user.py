@@ -6,6 +6,7 @@ from sqlalchemy.orm import Session
 from backend.db_depends import get_db
 from typing import Annotated
 from models.user import User
+from models.task import Task
 from schemas import CreateUser, UpdateUser
 from sqlalchemy import select
 from slugify import slugify
@@ -31,9 +32,8 @@ async def by_id(user_id: int, db: Annotated[Session, Depends(get_db)]):
     return user
 
 
-
 @router.post('/create/')
-async def create_user(user: CreateUser , db: Annotated[Session, Depends(get_db)]):
+async def create_user(user: CreateUser, db: Annotated[Session, Depends(get_db)]):
     try:
         user_slug = slugify(user.username)
         existing_user = db.execute(select(User).where(User.slug == user_slug)).scalar_one_or_none()
@@ -45,17 +45,16 @@ async def create_user(user: CreateUser , db: Annotated[Session, Depends(get_db)]
 
         return {'status_code': status.HTTP_201_CREATED, 'transaction': 'Successful', 'user': new_user}
     except Exception as e:
-        logger.error(f"Error creating user: {e}")
-        raise HTTPException(status_code=500, detail="Internal Server Error")
+        logger.error(f'Error creating user: {e}')
+        raise HTTPException(status_code=500, detail='Internal Server Error')
+
 
 @router.put('/update/{user_id}')
-async def update_user(user_id: int, user: UpdateUser , db: Annotated[Session, Depends(get_db)]):
+async def update_user(user_id: int, user: UpdateUser, db: Annotated[Session, Depends(get_db)]):
     try:
-
         existing_user = db.query(User).filter(User.id == user_id).first()
         if not existing_user:
-            raise HTTPException(status_code=404, detail="User  not found")
-
+            raise HTTPException(status_code=404, detail='User  not found')
 
         for key, value in user.model_dump().items():
             setattr(existing_user, key, value)
@@ -64,22 +63,32 @@ async def update_user(user_id: int, user: UpdateUser , db: Annotated[Session, De
         db.refresh(existing_user)
         return existing_user
     except Exception as e:
-        logger.error(f"Error updating user: {e}")
-        raise HTTPException(status_code=500, detail="Internal Server Error")
+        logger.error(f'Error updating user: {e}')
+        raise HTTPException(status_code=500, detail='Internal Server Error')
+
+
+@router.get('/{user_id}/tasks')
+async def tasks_by_user_id(user_id: int, db: Annotated[Session, Depends(get_db)]):
+    user = db.execute(select(User).where(User.id == user_id)).scalar_one_or_none()
+    if user is None:
+        raise HTTPException(status_code=404, detail='User  was not found')
+
+    tasks = db.execute(select(Task).where(Task.user_id == user_id)).scalars().all()
+    return tasks
 
 
 @router.delete('/delete/{user_id}')
 async def delete_user(user_id: int, db: Annotated[Session, Depends(get_db)]):
     try:
-
         existing_user = db.query(User).filter(User.id == user_id).first()
         if not existing_user:
-            raise HTTPException(status_code=404, detail="User  not found")
+            raise HTTPException(status_code=404, detail='User  not found')
+
+        db.query(Task).filter(Task.user_id == user_id).delete()
 
         db.delete(existing_user)
         db.commit()
         return
     except Exception as e:
-        logger.error(f"Error deleting user: {e}")
-        raise HTTPException(status_code=500, detail="Internal Server Error")
-
+        logger.error(f'Error deleting user: {e}')
+        raise HTTPException(status_code=500, detail='Internal Server Error')

@@ -4,7 +4,7 @@
 from sqlalchemy import Column, Integer, String, Boolean, ForeignKey
 from sqlalchemy.orm import relationship
 from backend.db import Base
-from models import *
+from models.user import User
 # from sqlalchemy.schema import CreateTable
 
 
