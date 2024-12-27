@@ -7,11 +7,10 @@ from backend.db_depends import get_db
 from typing import Annotated
 from models.user import User
 from schemas import CreateUser, UpdateUser
-from sqlalchemy import insert, select, update, delete
+from sqlalchemy import select
 from slugify import slugify
 import logging
 
-# Set up logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
@@ -83,5 +82,4 @@ async def delete_user(user_id: int, db: Annotated[Session, Depends(get_db)]):
     except Exception as e:
         logger.error(f"Error deleting user: {e}")
         raise HTTPException(status_code=500, detail="Internal Server Error")
-
 
